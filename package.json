@@ -12,6 +12,7 @@
   "author": "Reed Barger",
   "license": "ISC",
   "dependencies": {
+    "@mdi/font": "^4.6.95",
     "apollo-server": "^2.0.0-rc.7",
     "bcrypt": "^3.0.0",
     "dotenv": "^6.0.0",
