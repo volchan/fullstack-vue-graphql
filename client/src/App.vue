@@ -50,11 +50,9 @@
     </v-app-bar>
 
     <v-navigation-drawer
-      app
       temporary
       fixed
       v-model="sideNav"
-      light
     >
       <v-toolbar
         color="accent"
@@ -74,12 +72,16 @@
 
       <v-divider />
 
-      <v-list dense>
+      <v-list
+        dense
+        nav
+      >
         <v-list-item
           ripple
           v-for="item in sideNavItems"
           :key="item.title"
           :to="item.link"
+          link
         >
           <v-list-item-icon>
             <v-icon>{{item.icon}}</v-icon>
