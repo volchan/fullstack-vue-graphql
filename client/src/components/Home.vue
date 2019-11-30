@@ -1,8 +1,17 @@
 <template>
   <v-container>
     <h1>Home</h1>
+    <div v-if="$apollo.loading">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+        size="20"
+        width="2"
+      /> Loading...
+    </div>
     <ul
-      v-for="post in getPosts"
+      v-else
+      v-for="post in posts"
       :key="post._id"
     >
       <li>
@@ -16,6 +25,11 @@
 import { gql } from "apollo-boost";
 export default {
   name: "Home",
+  data() {
+    return {
+      posts: []
+    };
+  },
   apollo: {
     getPosts: {
       query: gql`
@@ -35,7 +49,16 @@ export default {
             }
           }
         }
-      `
+      `,
+      result({ data, loading, networkStatus }) {
+        if (!loading) {
+          this.posts = data.getPosts;
+        }
+      },
+      error(err) {
+        console.error("[ERROR!]", err);
+        console.dir(err);
+      }
     }
   }
 };
