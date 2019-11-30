@@ -94,7 +94,9 @@
     <!-- App Content -->
     <main>
       <v-container class="mt-12">
-        <router-view />
+        <transition name="fade">
+          <router-view />
+        </transition>
       </v-container>
     </main>
   </v-app>
@@ -112,14 +114,14 @@ export default {
     horizontalNavItems() {
       return [
         { icon: "mdi-message-text", title: "Posts", link: "/posts" },
-        { icon: "mdi-lock-open", title: "Sign In", link: "/login" },
+        { icon: "mdi-lock-open", title: "Sign In", link: "/signin" },
         { icon: "mdi-pencil", title: "Sign Up", link: "/signup" }
       ];
     },
     sideNavItems() {
       return [
         { icon: "mdi-message-text", title: "Posts", link: "/posts" },
-        { icon: "mdi-lock-open", title: "Sign In", link: "/login" },
+        { icon: "mdi-lock-open", title: "Sign In", link: "/signin" },
         { icon: "mdi-pencil", title: "Sign Up", link: "/signup" }
       ];
     }
@@ -131,3 +133,20 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition-property: opacity;
+  transition-duration: 0.25s;
+}
+
+.fade-enter-active {
+  transition-delay: 0.25s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+</style>
