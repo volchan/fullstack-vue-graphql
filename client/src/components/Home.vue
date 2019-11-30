@@ -1,28 +1,22 @@
 <template>
-  <v-container>
-    <h1>Home</h1>
-    <apolloQuery :query="getPostsQuery">
-      <template slot-scope="{ result: { error, data }, isLoading }">
-        <div v-if="isLoading">
-          <v-progress-circular
-            indeterminate
-            color="primary"
-            size="20"
-            width="2"
-          /> Loading...
-        </div>
-        <div v-else-if="error">Error! {{error.message}}</div>
-        <ul
-          v-else
-          v-for="post in data.getPosts"
+  <v-container v-if="getPosts">
+    <v-flex xs12>
+      <v-carousel
+        :cycle="true"
+        interval="3000"
+      >
+        <v-carousel-item
+          v-for="post in getPosts"
           :key="post._id"
+          :src="post.imageUrl"
         >
-          <li>
-            {{post.title}}, {{post.imageUrl}}, {{post.description}}, likes: {{post.likes}}, created by: {{post.createdBy.username}}
-          </li>
-        </ul>
-      </template>
-    </apolloQuery>
+          <h1
+            id="carousel__title"
+            class="text-center"
+          >{{post.title}}</h1>
+        </v-carousel-item>
+      </v-carousel>
+    </v-flex>
   </v-container>
 </template>
 
@@ -30,9 +24,9 @@
 import { gql } from "apollo-boost";
 export default {
   name: "Home",
-  data() {
-    return {
-      getPostsQuery: gql`
+  apollo: {
+    getPosts: {
+      query: gql`
         query {
           getPosts {
             _id
@@ -50,7 +44,21 @@ export default {
           }
         }
       `
-    };
+    }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+#carousel__title {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  border-radius: 5px 5px 0 0;
+  padding: 0.5em;
+  margin: 0 auto;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+}
+</style>
