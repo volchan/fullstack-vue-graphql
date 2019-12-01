@@ -7,10 +7,16 @@ import { defaultClient as apolloClient } from "../plugins/apollo";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    posts: []
+  },
+  mutations: {
+    setPosts: (state, posts) => {
+      state.posts = posts;
+    }
+  },
   actions: {
-    getPosts: () => {
+    getPosts: ({ commit }) => {
       apolloClient
         .query({
           query: gql`
@@ -27,9 +33,12 @@ export default new Vuex.Store({
             }
           `
         })
-        .then(data => console.log(data))
+        .then(({ data }) => commit("setPosts", data.getPosts))
         .catch(err => console.log(err));
     }
+  },
+  getters: {
+    posts: state => state.posts
   },
   modules: {}
 });

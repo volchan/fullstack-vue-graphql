@@ -1,12 +1,12 @@
 <template>
-  <v-container>
-    <!-- <v-flex xs12>
+  <v-container v-if="posts.length > 0">
+    <v-flex xs12>
       <v-carousel
         :cycle="true"
         interval="3000"
       >
         <v-carousel-item
-          v-for="post in getPosts"
+          v-for="post in posts"
           :key="post._id"
           :src="post.imageUrl"
         >
@@ -16,7 +16,7 @@
           >{{post.title}}</h1>
         </v-carousel-item>
       </v-carousel>
-    </v-flex> -->
+    </v-flex>
   </v-container>
 </template>
 
@@ -27,6 +27,11 @@ export default {
   methods: {
     handleGetCarouselPosts() {
       this.$store.dispatch("getPosts");
+    }
+  },
+  computed: {
+    posts() {
+      return this.$store.getters.posts;
     }
   },
   created() {
