@@ -13,3 +13,23 @@ export const GET_POSTS = gql`
     }
   }
 `;
+
+export const GET_CURRENT_USER = gql`
+  query {
+    getCurrentUser {
+      _id
+      username
+      email
+      avatar
+      joinDate
+      favorites {
+        _id
+        title
+        imageUrl
+        description
+        createdDate
+        likes
+      }
+    }
+  }
+`;

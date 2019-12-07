@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import { defaultClient as apolloClient } from "../plugins/apollo";
-import { GET_POSTS } from "../graphql/queries";
+import { GET_POSTS, GET_CURRENT_USER } from "../graphql/queries";
 import { SIGNIN_USER } from "../graphql/mutations";
 
 Vue.use(Vuex);
@@ -21,6 +21,21 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    getCurrentUser: ({ commit }) => {
+      commit("setLoading", true);
+      apolloClient
+        .query({
+          query: GET_CURRENT_USER
+        })
+        .then(({ data }) => {
+          commit("setLoading", false);
+          console.log(data.getCurrentUser);
+        })
+        .catch(err => {
+          commit("setLoading", false);
+          console.log(err);
+        });
+    },
     getPosts: ({ commit }) => {
       commit("setLoading", true);
       apolloClient
