@@ -35,7 +35,7 @@ module.exports = {
     },
     signinUser: async (_, { login, password }, { User }) => {
       const user = await User.findOne({
-        $or: [{ username: login }, { email: login }]
+        $or: [{ username: new RegExp(login, "i") }, { email: login }]
       });
       if (!user) throw new Error("Wrong credentials");
 
