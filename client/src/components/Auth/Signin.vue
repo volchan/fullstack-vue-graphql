@@ -83,6 +83,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Signin",
   data() {
@@ -92,12 +94,20 @@ export default {
       hidePassword: true
     };
   },
+  computed: {
+    ...mapGetters(["user"])
+  },
   methods: {
     handleSigninUser() {
       this.$store.dispatch("signinUser", {
         login: this.login,
         password: this.password
       });
+    }
+  },
+  watch: {
+    user(user) {
+      if (user) this.$router.push("/");
     }
   }
 };
