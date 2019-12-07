@@ -64,6 +64,7 @@
           depressed
           color="primary"
           v-if="user"
+          @click="handleSignoutUser"
         >
           <v-icon
             class="hidden-sm-only"
@@ -121,6 +122,7 @@
           ripple
           link
           v-if="user"
+          @click="handleSignoutUser"
         >
           <v-list-item-icon>
             <v-icon>mdi-exit-to-app</v-icon>
@@ -191,6 +193,9 @@ export default {
   methods: {
     toggleSideNav() {
       this.sideNav = !this.sideNav;
+    },
+    handleSignoutUser() {
+      this.$store.dispatch("signoutUser");
     }
   }
 };
