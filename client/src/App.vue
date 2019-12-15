@@ -161,6 +161,28 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-snackbar>
+
+        <v-snackbar
+          v-if="authError"
+          v-model="authErrorSnackbar"
+          color="warning"
+          bottom
+          left
+          :timeout="5000"
+        >
+          <v-icon
+            dark
+            class="mr-3"
+          >mdi-cancel</v-icon>
+          <h3>{{authError.message}}</h3>
+          <v-btn
+            dark
+            text
+            to="/signin"
+          >
+            Sign In
+          </v-btn>
+        </v-snackbar>
       </v-container>
     </main>
   </v-app>
@@ -174,11 +196,12 @@ export default {
   data() {
     return {
       sideNav: false,
-      authSnackbar: false
+      authSnackbar: false,
+      authErrorSnackbar: false
     };
   },
   computed: {
-    ...mapGetters(["user"]),
+    ...mapGetters(["authError", "user"]),
     horizontalNavItems() {
       let items = [
         { icon: "mdi-message-text", title: "Posts", link: "/posts" },
@@ -215,6 +238,9 @@ export default {
   watch: {
     user(newUser, oldUser) {
       if (oldUser === null) this.authSnackbar = true;
+    },
+    authError(value) {
+      if (value !== null) this.authErrorSnackbar = true;
     }
   },
   methods: {
