@@ -43,10 +43,16 @@
           dark
         >
           <v-container>
-            <v-form @submit.prevent="handleSigninUser">
+            <v-form
+              @submit.prevent="handleSigninUser"
+              v-model="isFormValid"
+              lazy-validation
+              ref="form"
+            >
               <v-layout row>
                 <v-flex xs12>
                   <v-text-field
+                    :rules="loginRules"
                     prepend-icon="mdi-account"
                     name="login"
                     label="Login"
@@ -61,6 +67,7 @@
               <v-layout row>
                 <v-flex xs12>
                   <v-text-field
+                    :rules="passwordRules"
                     prepend-icon="mdi-lock-open"
                     name="password"
                     label="Password"
@@ -81,9 +88,9 @@
                   <v-btn
                     class="ma-2"
                     :loading="loading"
+                    :disabled="!isFormValid"
                     color="accent"
                     type="submit"
-                    @click="loading = true"
                   >
                     Sign in
                   </v-btn>
@@ -111,14 +118,18 @@ export default {
       login: "",
       password: "",
       hidePassword: true,
-      loading: false
+      isFormValid: true,
+      loginRules: [login => !!login || "Login is required"],
+      passwordRules: [password => !!password || "Password is required"]
     };
   },
   computed: {
-    ...mapGetters(["user", "error"])
+    ...mapGetters(["loading", "user", "error"])
   },
   methods: {
     handleSigninUser() {
+      if (!this.$refs.form.validate()) return;
+
       this.$store.dispatch("signinUser", {
         login: this.login,
         password: this.password
