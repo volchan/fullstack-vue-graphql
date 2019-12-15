@@ -7,6 +7,10 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+import FormAlert from "./components/shared/FormAlert.vue";
+
+Vue.component("form-alert", FormAlert);
+
 Vue.config.productionTip = false;
 
 new Vue({
