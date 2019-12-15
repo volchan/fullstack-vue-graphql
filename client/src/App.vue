@@ -140,6 +140,27 @@
         <transition name="fade">
           <router-view />
         </transition>
+
+        <v-snackbar
+          v-model="authSnackbar"
+          color="success"
+          bottom
+          left
+          :timeout="5000"
+        >
+          <v-icon
+            dark
+            class="mr-3"
+          >mdi-check-circle</v-icon>
+          <h3>Signed in successfully</h3>
+          <v-btn
+            dark
+            text
+            @click.native="authSnackbar = false"
+          >
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-snackbar>
       </v-container>
     </main>
   </v-app>
@@ -152,7 +173,8 @@ export default {
   name: "App",
   data() {
     return {
-      sideNav: false
+      sideNav: false,
+      authSnackbar: false
     };
   },
   computed: {
@@ -188,6 +210,11 @@ export default {
         ];
       }
       return items;
+    }
+  },
+  watch: {
+    user(newUser, oldUser) {
+      if (oldUser === null) this.authSnackbar = true;
     }
   },
   methods: {
