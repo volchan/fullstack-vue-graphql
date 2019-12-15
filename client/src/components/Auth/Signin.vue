@@ -79,9 +79,14 @@
                   class="text-center"
                 >
                   <v-btn
+                    class="ma-2"
+                    :loading="loading"
                     color="accent"
                     type="submit"
-                  >Sign in</v-btn>
+                    @click="loading = true"
+                  >
+                    Sign in
+                  </v-btn>
                   <h3>
                     Already have an account? <router-link to="/signup">Sign up</router-link>
                   </h3>
@@ -105,7 +110,8 @@ export default {
     return {
       login: "",
       password: "",
-      hidePassword: true
+      hidePassword: true,
+      loading: false
     };
   },
   computed: {
