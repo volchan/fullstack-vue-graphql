@@ -4,7 +4,7 @@ import router from "../router";
 
 import { defaultClient as apolloClient } from "../plugins/apollo";
 import { GET_POSTS, GET_CURRENT_USER } from "../graphql/queries";
-import { SIGNIN_USER } from "../graphql/mutations";
+import { SIGNIN_USER, SIGNUP_USER } from "../graphql/mutations";
 
 Vue.use(Vuex);
 
@@ -72,6 +72,23 @@ export default new Vuex.Store({
         })
         .then(({ data }) => {
           localStorage.setItem("token", data.signinUser.token);
+          router.go();
+        })
+        .catch(err => {
+          commit("setError", err);
+          console.log(err);
+        });
+    },
+    signupUser: ({ commit }, payload) => {
+      commit("clearError");
+      localStorage.setItem("token", "");
+      apolloClient
+        .mutate({
+          mutation: SIGNUP_USER,
+          variables: payload
+        })
+        .then(({ data }) => {
+          localStorage.setItem("token", data.signupUser.token);
           router.go();
         })
         .catch(err => {

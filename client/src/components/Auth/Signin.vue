@@ -88,7 +88,7 @@
                   <v-btn
                     class="ma-2"
                     :loading="loading"
-                    :disabled="!isFormValid"
+                    :disabled="!isFormValid || loading"
                     color="accent"
                     type="submit"
                   >

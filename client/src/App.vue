@@ -22,7 +22,9 @@
       <v-spacer />
 
       <v-text-field
-        prepend-icon="mdi-magnify"
+        outlined
+        dense
+        prepend-inner-icon="mdi-magnify"
         placeholder="Search posts"
         color="accent"
         single-line
